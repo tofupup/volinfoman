@@ -1,0 +1,13 @@
+volinfoman
+----------
+
+This is a volunteer information manager, originally developed for a
+non-profit in Austin, TX.  It will track volunteer contact information
+and volunteer hours, optionally allowing those things to be modified
+by the volunteer instead of forcing the volunteer coordinator to do it.
+
+The project is coded in Java for the Google App Engine and Google Web
+Toolkit platforms.
+
+volinfoman is an Open Source project under the Apache License, version 
+2.0.
