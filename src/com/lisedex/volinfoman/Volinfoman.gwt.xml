@@ -75,4 +75,8 @@
 	<set-configuration-property name="log_pattern"
 		value="(%F:%L) %d [%-5p] %m%n" />
 	<!-- GWT-log configuration FIN -->
+
+	<!-- Include Gin -->
+	<inherits name="com.google.gwt.inject.Inject" />
+	
 </module>

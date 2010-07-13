@@ -18,22 +18,16 @@ package com.lisedex.volinfoman.client;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.lisedex.volinfoman.client.gin.VolinfomanGinjector;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Volinfoman implements EntryPoint {
-
-	/**
-	 * This field gets compiled out when <code>log_level=OFF</code>, or
-	 * any <code>log_level</code> higher than <code>DEBUG</code>.
-	 */
-	private long startTimeMillis;
-
-
 	/**
 	 * Note, we defer all application initialization code to
 	 * {@link #onModuleLoad2()} so that the UncaughtExceptionHandler
@@ -63,6 +57,12 @@ public class Volinfoman implements EntryPoint {
 	 */
 	private void onModuleLoad2() {
 		Log.debug("in onModuleLoad2");
+		
+		// Create a ginjector
+		VolinfomanGinjector ginjector = GWT.create(VolinfomanGinjector.class);
+		// Add the homepage to the rootpanel
+		RootPanel.get().add(ginjector.getHomepage());
+		
 		Log.debug("out onModuleLoad2");
 	}
 }
