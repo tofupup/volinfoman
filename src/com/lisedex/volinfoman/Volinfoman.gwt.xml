@@ -19,6 +19,9 @@
 	<source path='client' />
 	<source path='shared' />
 
+	<!-- Only compile for stated browsers -->
+	<set-property name="user.agent" value="gecko1_8,safari" />
+	
 	<!-- GWT-log configuration -->
 
 	<!-- For production most teams prefer to set the default log level to `OFF` -->
