@@ -1,22 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='volinfoman'>
-  <!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='com.google.gwt.user.User'/>
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User' />
 
-  <!-- Inherit the default GWT style sheet.  You can change       -->
-  <!-- the theme of your GWT application by uncommenting          -->
-  <!-- any one of the following lines.                            -->
-  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
-  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
-  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+	<!-- Inherit the default GWT style sheet. You can change -->
+	<!-- the theme of your GWT application by uncommenting -->
+	<!-- any one of the following lines. -->
+	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
-  <!-- Other module inherits                                      -->
+	<!-- Other module inherits -->
 
-  <!-- Specify the app entry point class.                         -->
-  <entry-point class='com.lisedex.volinfoman.client.Volinfoman'/>
+	<!-- Specify the app entry point class. -->
+	<entry-point class='com.lisedex.volinfoman.client.Volinfoman' />
 
-  <!-- Specify the paths for translatable code                    -->
-  <source path='client'/>
-  <source path='shared'/>
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+	<source path='shared' />
 
+	<!-- GWT-log configuration -->
+
+	<!-- For production most teams prefer to set the default log level to `OFF` -->
+	<!-- <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" /> -->
+
+	<!-- For development a default of `DEBUG` is recommended -->
+	<!-- <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" /> -->
+
+	<!-- To compile at `DEBUG`, `WARN` and `OFF` log levels (at 3x compile time) -->
+	<!-- <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" /> -->
+	<!-- <extend-property name="log_level" values="DEBUG,WARN" /> -->
+
+	<!-- Default `OFF` but allow selection of a specific log level, say `INFO`, 
+		via the `log_level` URL parameter, e.g. http[s]://hostame:port/path/to/your/module/Module.html?log_level=INFO -->
+	<!-- <inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" /> -->
+	<!-- <extend-property name="log_level" values="INFO" /> -->
+
+	<!-- Compile both `DEBUG` and `ERROR` log level, with level selection via 
+		a `gwt:property` meta tag in your HTML file, e.g. <meta name="gwt:property" 
+		content="log_level=DEBUG"> -->
+	<!-- <inherits name="com.allen_sauer.gwt.log.gwt-log-ERROR" /> -->
+	<!-- <extend-property name="log_level" values="DEBUG" /> -->
+
+	<!-- Compile DEBUG log level, with level selection via gwt:property meta 
+		tag in HTML file, e.g. <meta name="gwt:property" content="log_level=DEBUG"> -->
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+	<extend-property name="log_level" values="DEBUG" />
+
+	<!--Opens up a floating window in the page you're viewing. Good thing is 
+		you can change log level on the fly, but otherwise it's in the way -->
+	<set-property name="log_DivLogger" value="DISABLED" />
+	<!-- This is supposed to show up in the browser's error console, but I haven't 
+		seen it yet. But I only tried FF -->
+	<set-property name="log_ConsoleLogger" value="DISABLED" />
+	<!-- Enable experimental WindowLogger, which logs messages to a separate 
+		popup window. There are currently a couple of restrictions: 1. When Firefox 
+		is configured to open new Windows as new tabs, WindowLogger does not work 
+		2. In hosted mode, the windows are not automatically closed, although you 
+		can easily close them manually in the usual way -->
+	<set-property name="log_WindowLogger" value="ENABLED" />
+	<!-- Shows up in Firebug's console window -->
+	<set-property name="log_FirebugLogger" value="DISABLED" />
+	<!-- Shows up in the Development Mode tab in Eclipse -->
+	<set-property name="log_GWTLogger" value="ENABLED" />
+	<!-- Shows up in the Console tab in Eclipse, uses System.err and System.out -->
+	<set-property name="log_SystemLogger" value="ENABLED" />
+	<!-- Logs are sent to the web server via RPC -->
+	<set-property name="log_RemoteLogger" value="DISABLED" />
+
+	<!-- Inspired by Apache log4j PatternLayout: http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html -->
+	<set-configuration-property name="log_pattern"
+		value="(%F:%L) %d [%-5p] %m%n" />
+	<!-- GWT-log configuration FIN -->
 </module>

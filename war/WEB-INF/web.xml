@@ -4,21 +4,30 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-  
-  <!-- Servlets -->
-<!--  <servlet>-->
-<!--    <servlet-name>greetServlet</servlet-name>-->
-<!--    <servlet-class>com.lisedex.volinfoman.server.GreetingServiceImpl</servlet-class>-->
-<!--  </servlet>-->
-<!--  -->
-<!--  <servlet-mapping>-->
-<!--    <servlet-name>greetServlet</servlet-name>-->
-<!--    <url-pattern>/volinfoman/greet</url-pattern>-->
-<!--  </servlet-mapping>-->
-  
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>Volinfoman.html</welcome-file>
-  </welcome-file-list>
+
+	<!-- Servlets -->
+	<!-- <servlet> -->
+	<!-- <servlet-name>greetServlet</servlet-name> -->
+	<!-- <servlet-class>com.lisedex.volinfoman.server.GreetingServiceImpl</servlet-class> -->
+	<!-- </servlet> -->
+	<!-- -->
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>greetServlet</servlet-name> -->
+	<!-- <url-pattern>/volinfoman/greet</url-pattern> -->
+	<!-- </servlet-mapping> -->
+	<servlet>
+		<servlet-name>gwt-log-remote-logger-servlet</servlet-name>
+		<servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>gwt-log-remote-logger-servlet</servlet-name>
+		<url-pattern>/volinfoman/gwt-log</url-pattern>
+	</servlet-mapping>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Volinfoman.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>

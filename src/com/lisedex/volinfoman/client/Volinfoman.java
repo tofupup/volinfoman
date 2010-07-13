@@ -16,7 +16,11 @@
 
 package com.lisedex.volinfoman.client;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DeferredCommand;
+import com.google.gwt.user.client.Window;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -24,8 +28,41 @@ import com.google.gwt.core.client.EntryPoint;
 public class Volinfoman implements EntryPoint {
 
 	/**
-	 * This is the entry point method.
+	 * This field gets compiled out when <code>log_level=OFF</code>, or
+	 * any <code>log_level</code> higher than <code>DEBUG</code>.
+	 */
+	private long startTimeMillis;
+
+
+	/**
+	 * Note, we defer all application initialization code to
+	 * {@link #onModuleLoad2()} so that the UncaughtExceptionHandler
+	 * can catch any unexpected exceptions.
 	 */
 	public void onModuleLoad() {
+		/* Install an UncaughtExceptionHandler which will
+		 * produce <code>FATAL</code> log messages
+		 */
+		Log.setUncaughtExceptionHandler();
+
+		/* Use a deferred command so that the UncaughtExceptionHandler
+		 * catches any exceptions in onModuleLoad2()
+		 */
+		DeferredCommand.addCommand(new Command() {
+			public void execute() {
+				onModuleLoad2();
+			}
+		});
+	}
+
+	/**
+	 * As Log.setUncaughtExceptionHandler() needs to finish before
+	 * we continue initialization, it calls onModuleLoad2() as a 
+	 * DeferredCommand.  The rest of my code for onModuleLoad()
+	 * goes here.
+	 */
+	private void onModuleLoad2() {
+		Log.debug("in onModuleLoad2");
+		Log.debug("out onModuleLoad2");
 	}
 }
