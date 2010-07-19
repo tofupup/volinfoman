@@ -13,17 +13,22 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  **/
-package com.lisedex.volinfoman.client.gin;
+package com.lisedex.volinfoman.client.data;
 
-import com.google.gwt.inject.client.GinModules;
-import com.google.gwt.inject.client.Ginjector;
-import com.lisedex.volinfoman.client.Homepage;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.lisedex.volinfoman.shared.User;
 
 /**
  * @author John Schutz <john@lisedex.com>
  *
+ * Marker interface for async User related RPC services
  */
-@GinModules(VolinfomanModule.class)
-public interface VolinfomanGinjector extends Ginjector {
-	Homepage getHomepage();
+public interface UserServiceAsync {
+
+	void getUser(Long id, AsyncCallback<User> callback);
+
+	void getUser(String username, AsyncCallback<User> callback);
+
+	void putUser(User user, AsyncCallback<Void> callback);
+
 }
