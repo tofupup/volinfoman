@@ -18,6 +18,7 @@ package com.lisedex.volinfoman.server;
 import java.util.logging.Logger;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.inject.Inject;
 import com.googlecode.objectify.helper.DAOBase;
 import com.lisedex.volinfoman.client.data.UserService;
 import com.lisedex.volinfoman.shared.User;
@@ -31,7 +32,8 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 
     private static final Logger log = Logger.getLogger(UserServiceImpl.class.getName());
 
-    private DAO dao = new DAO();
+    @Inject
+    private Dao dao;
     
 	/* (non-Javadoc)
 	 * @see com.lisedex.volinfoman.client.data.UserService#getUser(java.lang.Long)

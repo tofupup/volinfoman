@@ -10,20 +10,21 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/volinfoman/lib/gwt-log-3.0.2.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/gin-1.0.jar">
+	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-2.2.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/volinfoman/lib/objectify-2.2.1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-servlet-2.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gin-1.0.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/volinfoman/lib/gin-1.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/guice-2.0.jar">
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-2.0.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/volinfoman/lib/guice-2.0-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/aopalliance.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-2.2.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/volinfoman/lib/objectify-2.2.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>

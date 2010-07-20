@@ -86,6 +86,7 @@ limitations under the License.
 	<set-property name="log_SystemLogger" value="ENABLED" />
 	<!-- Logs are sent to the web server via RPC -->
 	<set-property name="log_RemoteLogger" value="DISABLED" />
+<!--	<inherits name="com.allen_sauer.gwt.log.gwt-log-RemoteLogger" />-->
 
 	<!-- Inspired by Apache log4j PatternLayout: http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html -->
 	<set-configuration-property name="log_pattern"

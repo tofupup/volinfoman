@@ -21,11 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.appengine.api.datastore.QueryResultIterator;
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Query;
-import com.lisedex.volinfoman.server.DAO;
+import com.google.inject.Inject;
+import com.lisedex.volinfoman.server.Dao;
+import com.lisedex.volinfoman.server.DaoGaeDatastore;
 import com.lisedex.volinfoman.shared.User;
 
 /**
@@ -35,6 +33,9 @@ import com.lisedex.volinfoman.shared.User;
  *
  */
 public class BuildDB extends HttpServlet {
+	@Inject
+	private Dao dao;
+	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException {
@@ -47,21 +48,12 @@ public class BuildDB extends HttpServlet {
 //		resp.getWriter().println("Request:<br />" + req.toString() + "<br />");
 //		resp.getWriter().println("Query String:<br />" + req.getQueryString()+ "<br />");
 		
-		DAO dao = new DAO();
-	
 		if (req.getQueryString() != null && req.getQueryString().equals("delete")) {
 			resp.getWriter().println("<p><h1>DELETING DATA STORE</h1><p>");
 			
 			resp.getWriter().print("Removing Users...");
-			
-			Objectify ofy = ObjectifyService.begin();
-			// we want all items of User
-			Query<User> query = ofy.query(User.class);
-			resp.getWriter().println(query.listKeys());
-			// now we delete them by getting a list of their keys
-			ofy.delete(query.fetchKeys());
-			resp.getWriter().println("<p>DONE<p>");
-			
+			dao.deleteAllUsers();
+			resp.getWriter().println("DONE<p>");
 		}
 		
 		resp.getWriter().println("<p>Adding initial data...<p>");
