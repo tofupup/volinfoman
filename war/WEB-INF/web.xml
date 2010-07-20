@@ -41,9 +41,30 @@ limitations under the License.
 		<url-pattern>/volinfoman/gwt-log</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>volinfoman-admin-builddb-servlet</servlet-name>
+		<servlet-class>com.lisedex.volinfoman.server.admin.BuildDB</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>volinfoman-admin-builddb-servlet</servlet-name>
+		<url-pattern>/volinfoman/admin/builddb</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Volinfoman.html</welcome-file>
 	</welcome-file-list>
 
+	<!-- Define security constraints for admin interface, requires
+		 admin privileges to the app engine application -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>admin</web-resource-name>
+			<url-pattern>/volinfoman/admin/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>		 
 </web-app>
