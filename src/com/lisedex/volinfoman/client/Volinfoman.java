@@ -22,7 +22,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.lisedex.volinfoman.client.gin.VolinfomanGinjector;
+import com.google.gwt.user.client.ui.Widget;
+import com.mvp4g.client.Mvp4gModule;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -58,11 +59,10 @@ public class Volinfoman implements EntryPoint {
 	private void onModuleLoad2() {
 		Log.debug("in onModuleLoad2");
 		
-		// Create a ginjector
-		VolinfomanGinjector ginjector = GWT.create(VolinfomanGinjector.class);
-		// Add the homepage to the rootpanel
-		RootPanel.get().add(ginjector.getHomepage());
-		
+		Mvp4gModule module = (Mvp4gModule)GWT.create( Mvp4gModule.class );
+		module.createAndStartModule();
+		RootPanel.get().add( (Widget)module.getStartView() );
+				
 		Log.debug("out onModuleLoad2");
 	}
 }

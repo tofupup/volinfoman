@@ -27,5 +27,16 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/volinfoman/lib/guice-2.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/mvp4g-1.2.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.5.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/volinfoman/lib/commons-lang-2.5-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/commons-configuration-1.6.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/volinfoman/lib/commons-configuration-1.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

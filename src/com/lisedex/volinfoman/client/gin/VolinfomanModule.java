@@ -16,8 +16,6 @@
 package com.lisedex.volinfoman.client.gin;
 
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.lisedex.volinfoman.client.DefaultHomepage;
-import com.lisedex.volinfoman.client.Homepage;
 
 /**
  * @author John Schutz <john@lisedex.com>
@@ -30,7 +28,6 @@ public class VolinfomanModule extends AbstractGinModule {
 	 */
 	@Override
 	protected void configure() {
-		bind(Homepage.class).to(DefaultHomepage.class);
 	}
 
 }

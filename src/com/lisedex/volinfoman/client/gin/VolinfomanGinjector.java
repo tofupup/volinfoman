@@ -17,7 +17,6 @@ package com.lisedex.volinfoman.client.gin;
 
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
-import com.lisedex.volinfoman.client.Homepage;
 
 /**
  * @author John Schutz <john@lisedex.com>
@@ -25,5 +24,4 @@ import com.lisedex.volinfoman.client.Homepage;
  */
 @GinModules(VolinfomanModule.class)
 public interface VolinfomanGinjector extends Ginjector {
-	Homepage getHomepage();
 }
