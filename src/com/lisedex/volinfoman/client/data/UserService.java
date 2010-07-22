@@ -20,14 +20,30 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.lisedex.volinfoman.shared.User;
 
 /**
- * @author John Schutz <john@lisedex.com>
- *
+ * 
  * Marker interface for User related RPC services
+ * 
+ * @author John Schutz <john@lisedex.com>
  */
 @RemoteServiceRelativePath("user")
 public interface UserService extends RemoteService {
+	/**
+	 * Get user by id field
+	 * @param id Id field in datastore
+	 * @return User object with specified id
+	 */
 	User getUser(Long id);
+	
+	/**
+	 * Get user by username
+	 * @param username username field in datastore
+	 * @return User object with specified username
+	 */
 	User getUser(String username);
 	
+	/**
+	 * Write user to datastore
+	 * @param user User object to be written
+	 */
 	void putUser(User user);
 }

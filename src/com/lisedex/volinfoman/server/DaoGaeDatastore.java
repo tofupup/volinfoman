@@ -21,7 +21,7 @@ import com.googlecode.objectify.helper.DAOBase;
 import com.lisedex.volinfoman.shared.User;
 
 /**
- * General Data Access Object for VolInfoMan servlets
+ * Google App Engine specific implementation of the Dao interface
  * 
  * @author John Schutz <john@lisedex.com>
  */

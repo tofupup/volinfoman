@@ -20,6 +20,8 @@ import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
 /**
+ * Tells Guice what Modules to load for its configuration
+ * 
  * @author John Schutz <john@lisedex.com>
  *
  */

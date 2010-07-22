@@ -15,12 +15,13 @@
  **/
 package com.lisedex.volinfoman.server.guice;
 
-import com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl;
 import com.google.inject.servlet.ServletModule;
 import com.lisedex.volinfoman.server.UserServiceImpl;
 import com.lisedex.volinfoman.server.admin.BuildDB;
 
 /**
+ * Tells Guice to map which servlet to what URL
+ * 
  * @author John Schutz <john@lisedex.com>
  *
  */

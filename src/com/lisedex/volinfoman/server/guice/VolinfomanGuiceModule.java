@@ -23,6 +23,8 @@ import com.lisedex.volinfoman.server.UserServiceImpl;
 import com.lisedex.volinfoman.server.admin.BuildDB;
 
 /**
+ * Configure Guice injection for the server side
+ * 
  * @author John Schutz <john@lisedex.com>
  *
  */
@@ -33,7 +35,7 @@ public class VolinfomanGuiceModule extends AbstractModule {
 	 */
 	@Override
 	protected void configure() {
-		// Servlets
+		// Servlets are Singletons
 		bind(UserServiceImpl.class).in(Singleton.class);
 		bind(BuildDB.class).in(Singleton.class);
 

@@ -18,6 +18,8 @@ package com.lisedex.volinfoman.server;
 import com.lisedex.volinfoman.shared.User;
 
 /**
+ * Data Access Object interface for datastore interactions
+ * 
  * @author John Schutz <john@lisedex.com>
  *
  */

@@ -19,6 +19,8 @@ import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
 /**
+ * Declares Ginjector interface specific to this application
+ * 
  * @author John Schutz <john@lisedex.com>
  *
  */

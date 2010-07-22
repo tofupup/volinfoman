@@ -18,6 +18,7 @@ package com.lisedex.volinfoman.client.gin;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 /**
+ * Configures bindings for Gin injection
  * @author John Schutz <john@lisedex.com>
  *
  */

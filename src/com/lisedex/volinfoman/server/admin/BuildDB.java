@@ -33,13 +33,19 @@ import com.lisedex.volinfoman.shared.User;
  *
  */
 public class BuildDB extends HttpServlet {
+	// Specific Dao implementation injected by Guice
 	@Inject
 	private Dao dao;
 	
+	/**
+	 * Adds base application information to datastore.  If sent with the
+	 * "delete" query string, empties the entire datastore first.
+	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException {
 		
+		// build HTML response page
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("utf-8");
 		resp.getWriter().println("<head><title>Add initial datastore information</title></head>");
@@ -48,11 +54,15 @@ public class BuildDB extends HttpServlet {
 //		resp.getWriter().println("Request:<br />" + req.toString() + "<br />");
 //		resp.getWriter().println("Query String:<br />" + req.getQueryString()+ "<br />");
 		
+		// if we got the query string "delete"
 		if (req.getQueryString() != null && req.getQueryString().equals("delete")) {
+			// notify user that the datastore is now gone
 			resp.getWriter().println("<p><h1>DELETING DATA STORE</h1><p>");
-			
 			resp.getWriter().print("Removing Users...");
+			
+			// delete everything in the datastore
 			dao.deleteAllUsers();
+			
 			resp.getWriter().println("DONE<p>");
 		}
 		

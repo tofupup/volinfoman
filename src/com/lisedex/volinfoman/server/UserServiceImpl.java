@@ -24,13 +24,16 @@ import com.lisedex.volinfoman.client.data.UserService;
 import com.lisedex.volinfoman.shared.User;
 
 /**
+ * Implementation of the UserService interface for getting User information
+ * from the datastore
+ * 
  * @author John Schutz <john@lisedex.com>
  *
  */
 public class UserServiceImpl extends RemoteServiceServlet implements
 		UserService {
 
-    private static final Logger log = Logger.getLogger(UserServiceImpl.class.getName());
+    private static final Logger LOG = Logger.getLogger(UserServiceImpl.class.getName());
 
     @Inject
     private Dao dao;
@@ -47,7 +50,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 	 * @see com.lisedex.volinfoman.client.data.UserService#getUser(java.lang.String)
 	 */
 	public User getUser(String username) {
-		log.info("getUser(String)");
+		LOG.info("getUser(String)");
 		return dao.getUser(username); 
 	}
 

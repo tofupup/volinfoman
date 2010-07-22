@@ -26,7 +26,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.mvp4g.client.Mvp4gModule;
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * Entry point for the VolInfoMan application.
+ * 
  */
 public class Volinfoman implements EntryPoint {
 	/**
@@ -59,6 +60,8 @@ public class Volinfoman implements EntryPoint {
 	private void onModuleLoad2() {
 		Log.debug("in onModuleLoad2");
 		
+		// code to initialize mvp4g, which handles setting up our
+		// Ginjection
 		Mvp4gModule module = (Mvp4gModule)GWT.create( Mvp4gModule.class );
 		module.createAndStartModule();
 		RootPanel.get().add( (Widget)module.getStartView() );
