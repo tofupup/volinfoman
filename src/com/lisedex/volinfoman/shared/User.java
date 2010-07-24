@@ -19,6 +19,7 @@ import java.io.Serializable;
 
 import javax.persistence.Id;
 
+import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.Indexed;
 import com.googlecode.objectify.annotation.Unindexed;
 
@@ -28,7 +29,12 @@ import com.googlecode.objectify.annotation.Unindexed;
  * 
  * @author John Schutz <john@lisedex.com>
  */
+@Cached
 public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7069951045089428783L;
 	/**
 	 * User object's status is invalid
 	 */

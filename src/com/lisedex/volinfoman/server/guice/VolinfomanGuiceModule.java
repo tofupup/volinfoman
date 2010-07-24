@@ -21,6 +21,7 @@ import com.lisedex.volinfoman.server.Dao;
 import com.lisedex.volinfoman.server.DaoGaeDatastore;
 import com.lisedex.volinfoman.server.UserServiceImpl;
 import com.lisedex.volinfoman.server.admin.BuildDB;
+import com.lisedex.volinfoman.server.admin.CacheStats;
 
 /**
  * Configure Guice injection for the server side
@@ -38,7 +39,8 @@ public class VolinfomanGuiceModule extends AbstractModule {
 		// Servlets are Singletons
 		bind(UserServiceImpl.class).in(Singleton.class);
 		bind(BuildDB.class).in(Singleton.class);
-
+		bind(CacheStats.class).in(Singleton.class);
+		
 		// Data providers
 		bind(Dao.class).to(DaoGaeDatastore.class).in(Singleton.class);
 	}
