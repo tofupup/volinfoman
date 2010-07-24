@@ -35,7 +35,7 @@ import com.mvp4g.client.event.EventBus;
 // ginModule - gin configuration module
 // logLevel - DETAILED or SIMPLE
 // logger - what class to send event log messages through
-@Events(startView = LoginView.class, historyOnStart = true, ginModule=VolinfomanModule.class)
+@Events(startView = LoginView.class, historyOnStart = true, ginModules=VolinfomanModule.class)
 @Debug( logLevel = LogLevel.DETAILED, logger = Mvp4gLoggerToGwtLogAdapter.class )
 public interface VolinfomanEventBus extends EventBus {
 	
@@ -44,5 +44,7 @@ public interface VolinfomanEventBus extends EventBus {
 	 */
 	@Event(handlers = LoginPresenter.class)
 	public void login();
-
+	
+	@Event(handlers = LoginPresenter.class)
+	public void loadHomepage();
 }

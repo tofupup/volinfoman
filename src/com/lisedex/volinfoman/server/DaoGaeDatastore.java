@@ -16,8 +16,8 @@
 package com.lisedex.volinfoman.server;
 
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Query;
 import com.googlecode.objectify.helper.DAOBase;
+import com.lisedex.volinfoman.server.util.BCrypt;
 import com.lisedex.volinfoman.shared.User;
 
 /**
@@ -68,5 +68,34 @@ public class DaoGaeDatastore extends DAOBase implements Dao {
 	@Override
 	public void deleteAllUsers() {
 		ofy().delete(ofy().query(User.class).fetchKeys());
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.server.Dao#changeUserPassword(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void changeUserPassword(User user, String password) {
+		if (user == null) return;
+		
+		String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+		user.setPassword(hashed);
+		putUser(user);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.server.Dao#checkUserPassword(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean checkUserPassword(String username, String password) {
+		if (username == null || password == null) {
+			return false;
+		}
+		
+		User user = getUser(username);
+		if (user == null || user.getPassword() == null) {
+			return false;
+		}
+		
+		return BCrypt.checkpw(password, user.getPassword());
 	}
 }

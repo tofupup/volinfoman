@@ -54,4 +54,22 @@ public interface Dao {
 	 * Delete all users in datastore.
 	 */
 	public abstract void deleteAllUsers();
+	
+	/**
+	 * Change a specified user's password, writing the modified user to the datastore
+	 * 
+	 * @param username username of the User to change
+	 * @param password password to change to
+	 */
+	public abstract void changeUserPassword(User user, String password);
+	
+	/**
+	 * Check the password provided against the User stored in the datastore under
+	 * the specified username
+	 * 
+	 * @param username username field of the User object to check the password against
+	 * @param password password to check
+	 * @return true if password is a match, false otherwise
+	 */
+	public abstract boolean checkUserPassword(String username, String password);
 }

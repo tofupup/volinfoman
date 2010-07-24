@@ -17,10 +17,12 @@ package com.lisedex.volinfoman.server;
 
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpSession;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
-import com.googlecode.objectify.helper.DAOBase;
 import com.lisedex.volinfoman.client.data.UserService;
+import com.lisedex.volinfoman.server.util.Session;
 import com.lisedex.volinfoman.shared.User;
 
 /**
@@ -30,6 +32,7 @@ import com.lisedex.volinfoman.shared.User;
  * @author John Schutz <john@lisedex.com>
  *
  */
+@SuppressWarnings("serial")
 public class UserServiceImpl extends RemoteServiceServlet implements
 		UserService {
 
@@ -37,29 +40,38 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 
     @Inject
     private Dao dao;
-    
-	/* (non-Javadoc)
-	 * @see com.lisedex.volinfoman.client.data.UserService#getUser(java.lang.Long)
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.lisedex.volinfoman.client.data.UserService#checkUserPassword(java.lang.String, java.lang.String)
 	 */
-	public User getUser(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public boolean checkUserPassword(String username, String password) {
+		LOG.info("checkUserPassword(" + username + ", " + password + ")");
+		return dao.checkUserPassword(username, password);
 	}
 
 	/* (non-Javadoc)
-	 * @see com.lisedex.volinfoman.client.data.UserService#getUser(java.lang.String)
+	 * @see com.lisedex.volinfoman.client.data.UserService#authenticateUser(java.lang.String, java.lang.String)
 	 */
-	public User getUser(String username) {
-		LOG.info("getUser(String)");
-		return dao.getUser(username); 
+	@Override
+	public boolean authenticateUser(String username, String password) {
+		HttpSession session = this.getThreadLocalRequest().getSession();
+
+		LOG.info("authenticateUser(" + username + ", " + password + ")");
+		if (username == null || password == null) {
+			LOG.info("authenticateUser: login failed, username or password null");
+			return false;
+		}
+		
+		if (!checkUserPassword(username, password)) {
+			LOG.info("authenticateUser: login failed, username does not exist, or "
+					+ "password does not match stored in datastore");
+			return false;
+		}
+		
+		session.setAttribute(Session.AUTHENTICATEDUSER, username);
+		LOG.info("authenticateUser: login succeeded.  session = " + session.getId());
+		return true;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.lisedex.volinfoman.client.data.UserService#putUser(com.lisedex.volinfoman.shared.User)
-	 */
-	public void putUser(User user) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

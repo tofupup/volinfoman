@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Inject;
 import com.lisedex.volinfoman.server.Dao;
-import com.lisedex.volinfoman.server.DaoGaeDatastore;
 import com.lisedex.volinfoman.shared.User;
 
 /**
@@ -32,6 +31,7 @@ import com.lisedex.volinfoman.shared.User;
  * @author John Schutz <john@lisedex.com>
  *
  */
+@SuppressWarnings("serial")
 public class BuildDB extends HttpServlet {
 	// Specific Dao implementation injected by Guice
 	@Inject
@@ -69,8 +69,8 @@ public class BuildDB extends HttpServlet {
 		resp.getWriter().println("<p>Adding initial data...<p>");
 
 		// add an administrator user
-		User user = new User(null, "admin", User.STATUS_CONFIRMED, "Admin", "Istrator", "admin@foobar.nono", "admin");
-		dao.putUser(user);
+		User user = new User(null, "admin", User.STATUS_CONFIRMED, "Admin", "Istrator", "admin@foobar.nono", null);
+		dao.changeUserPassword(user, "heynow");
 		resp.getWriter().println("Adding User: " + user.toString());
 		
 		resp.getWriter().println("</body>");

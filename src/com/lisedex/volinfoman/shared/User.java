@@ -32,10 +32,6 @@ import com.googlecode.objectify.annotation.Unindexed;
 @Cached
 public class User implements Serializable {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7069951045089428783L;
-	/**
 	 * User object's status is invalid
 	 */
 	public static long STATUS_INVALID = 0;
@@ -166,6 +162,20 @@ public class User implements Serializable {
 	 */
 	public long getStatus() {
 		return status;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	/* (non-Javadoc)

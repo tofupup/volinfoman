@@ -39,5 +39,8 @@ limitations under the License.
 		<br />
 		<br />
 		<g:HTML ui:field="sendStatus" />
+		<br />
+		<br />
+		<a href="/volinfoman/registerUser">registration page</a>
 	</g:HTMLPanel>
 </ui:UiBinder> 

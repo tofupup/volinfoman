@@ -74,7 +74,7 @@ limitations under the License.
 	<set-property name="log_DivLogger" value="DISABLED" />
 	<!-- This is supposed to show up in the browser's error console, but I haven't 
 		seen it yet. But I only tried FF -->
-	<set-property name="log_ConsoleLogger" value="DISABLED" />
+	<set-property name="log_ConsoleLogger" value="ENABLED" />
 	<!-- Enable experimental WindowLogger, which logs messages to a separate 
 		popup window. There are currently a couple of restrictions: 1. When Firefox 
 		is configured to open new Windows as new tabs, WindowLogger does not work 

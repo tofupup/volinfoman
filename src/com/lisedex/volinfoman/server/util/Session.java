@@ -13,20 +13,12 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  **/
-package com.lisedex.volinfoman.client.data;
-
-import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+package com.lisedex.volinfoman.server.util;
 
 /**
- * 
- * Marker interface for User related RPC services
- * 
  * @author John Schutz <john@lisedex.com>
+ *
  */
-@RemoteServiceRelativePath("user")
-public interface UserService extends RemoteService {
-	boolean checkUserPassword(String username, String password);
-	
-	boolean authenticateUser(String username, String password);
+public class Session {
+	public final static String AUTHENTICATEDUSER = "authenticatedUser";
 }

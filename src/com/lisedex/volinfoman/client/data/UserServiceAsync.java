@@ -16,7 +16,6 @@
 package com.lisedex.volinfoman.client.data;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.lisedex.volinfoman.shared.User;
 
 /**
  * Marker interface for async User related RPC services
@@ -24,25 +23,9 @@ import com.lisedex.volinfoman.shared.User;
  * @author John Schutz <john@lisedex.com>
  */
 public interface UserServiceAsync {
+	void checkUserPassword(String username, String password,
+			AsyncCallback<Boolean> callback);
 
-	/**
-	 * Get user by id field
-	 * @param id Id field in datastore
-	 * @param callback executed when RPC returns
-	 */
-	void getUser(Long id, AsyncCallback<User> callback);
-
-	/** Get user by username
-	 * 
-	 * @param username username field in datastore
-	 * @param callback executed when RPC returns
-	 */
-	void getUser(String username, AsyncCallback<User> callback);
-
-	/** 
-	 * Write user to datastore
-	 * @param user User object to be written
-	 * @param callback executed when RPC returns
-	 */
-	void putUser(User user, AsyncCallback<Void> callback);
+	void authenticateUser(String username, String password,
+			AsyncCallback<Boolean> callback);
 }

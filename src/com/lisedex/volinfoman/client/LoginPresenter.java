@@ -16,14 +16,12 @@
 package com.lisedex.volinfoman.client;
 
 
-
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.lisedex.volinfoman.client.data.UserServiceAsync;
-import com.lisedex.volinfoman.shared.User;
 import com.mvp4g.client.annotation.InjectService;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
@@ -127,7 +125,8 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.LoginViewInterf
 		}
 		
 		// use RPC to get the user from the server
-		userService.getUser(view.getUsername(), new AsyncCallback<User>() {
+		userService.authenticateUser(view.getUsername(), view.getPassword(),
+				new AsyncCallback<Boolean>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				Log.debug("got RPC failure.  exception=" + caught.getMessage());
@@ -136,16 +135,21 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.LoginViewInterf
 			}
 
 			@Override
-			public void onSuccess(User result) {
-				if (result == null) {
-					Log.debug("got RPC success.  user=null");
-					view.setMessage("NO SUCH USER");
+			public void onSuccess(Boolean result) {
+				if (result == Boolean.FALSE){
+					view.setMessage("Login failed, please try again, " + 
+							"or visit our registration page to create an account");
 				} else {
-					Log.debug("got RPC success.  user=" + result.toString());
-					view.setMessage("SUCCESS: " + result.toString());
+					view.setMessage("Login successful");
+					eventBus.loadHomepage();
 				}
+				
 				view.setLoginButtonEnabled(true);
+				return;
 			}
 		});
+	}
+	
+	public void onLoadHomepage() {
 	}
 }
