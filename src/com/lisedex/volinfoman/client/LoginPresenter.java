@@ -77,6 +77,12 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.LoginViewInterf
 		 * @param enabled true to enable, false to disable
 		 */
 		public void setLoginButtonEnabled(boolean enabled);
+		
+		/**
+		 * After a failed login, we want to go back to the 
+		 * username entry and start again
+		 */
+		public void tryAgain();
 	}
 
 	// userService for talking to our user servlet via RPC
@@ -120,7 +126,7 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.LoginViewInterf
 			Log.fatal("userService is null, not injected", 
 					new NullPointerException("LoginPresenter.userService"));
 			view.setMessage("Fatal application error.  \"userService not injected.\"");
-			view.setLoginButtonEnabled(true);
+			view.tryAgain();
 			return;
 		}
 		
@@ -131,7 +137,7 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.LoginViewInterf
 			public void onFailure(Throwable caught) {
 				Log.debug("got RPC failure.  exception=" + caught.getMessage());
 				view.setMessage("RPC FAILED");
-				view.setLoginButtonEnabled(true);
+				view.tryAgain();
 			}
 
 			@Override
@@ -144,7 +150,7 @@ public class LoginPresenter extends BasePresenter<LoginPresenter.LoginViewInterf
 					eventBus.loadHomepage();
 				}
 				
-				view.setLoginButtonEnabled(true);
+				view.tryAgain();
 				return;
 			}
 		});

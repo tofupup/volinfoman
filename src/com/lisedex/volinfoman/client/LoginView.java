@@ -22,11 +22,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.lisedex.volinfoman.client.widgets.LongLoginWidget;
 
 /**
  * Login page View
@@ -50,14 +49,9 @@ public class LoginView extends Composite
 	}
 	
 	// fields filled by the UiBinder cannot be private
+
 	@UiField
-	TextBox username;
-	
-	@UiField
-	TextBox password;
-	
-	@UiField
-	Button sendButton;
+	LongLoginWidget loginWidget;
 	
 	@UiField
 	HTML sendStatus;
@@ -70,19 +64,17 @@ public class LoginView extends Composite
 		Log.debug("in constructor");
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		
-		sendButton.setText("Login");
-		
+				
 		sendStatus.setStyleName("serverResponseLabelError");
 		
 		// set focus in a deferred command, since it doesn't work otherwise
 		// see gwt issue 1849
 		DeferredCommand.addCommand(new Command() {
 			public void execute() {
-				username.setFocus(true);
+				loginWidget.setFocus(true);
+				loginWidget.selectAll();
 			}
 		});
-		username.selectAll();
 		
 		Log.debug("out constructor");
 	}
@@ -92,7 +84,7 @@ public class LoginView extends Composite
 	 */
 	@Override
 	public String getUsername() {
-		return username.getText();
+		return loginWidget.getUsername();
 	}
 
 	/* (non-Javadoc)
@@ -100,7 +92,7 @@ public class LoginView extends Composite
 	 */
 	@Override
 	public String getPassword() {
-		return password.getText();
+		return loginWidget.getPassword();
 	}
 
 	/* (non-Javadoc)
@@ -116,7 +108,7 @@ public class LoginView extends Composite
 	 */
 	@Override
 	public HasClickHandlers getLoginButton() {
-		return sendButton;
+		return loginWidget;
 	}
 
 	/* (non-Javadoc)
@@ -124,6 +116,16 @@ public class LoginView extends Composite
 	 */
 	@Override
 	public void setLoginButtonEnabled(boolean enabled) {
-		sendButton.setEnabled(enabled);
+		loginWidget.setEnabled(enabled);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.client.LoginPresenter.LoginViewInterface#tryAgain()
+	 */
+	@Override
+	public void tryAgain() {
+		loginWidget.setEnabled(true);
+		loginWidget.setFocus(true);
+		loginWidget.selectAll();
 	}
 }

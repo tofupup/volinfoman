@@ -32,9 +32,6 @@ import net.sf.jsr107cache.CacheManager;
 import net.sf.jsr107cache.CacheStatistics;
 
 import com.allen_sauer.gwt.log.client.Log;
-import com.google.inject.Inject;
-import com.lisedex.volinfoman.server.Dao;
-import com.lisedex.volinfoman.shared.User;
 
 /**
  * Populates data store with initial information
@@ -44,10 +41,6 @@ import com.lisedex.volinfoman.shared.User;
  */
 @SuppressWarnings("serial")
 public class CacheStats extends HttpServlet {
-	// Specific Dao implementation injected by Guice
-	@Inject
-	private Dao dao;
-	
 	/**
 	 * Adds base application information to datastore.  If sent with the
 	 * "delete" query string, empties the entire datastore first.

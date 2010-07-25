@@ -29,6 +29,7 @@ import com.googlecode.objectify.annotation.Unindexed;
  * 
  * @author John Schutz <john@lisedex.com>
  */
+@SuppressWarnings("serial")
 @Cached
 public class User implements Serializable {
 	/**

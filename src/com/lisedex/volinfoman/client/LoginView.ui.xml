@@ -16,7 +16,7 @@ limitations under the License.
 -->
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:v="urn:import:com.lisedex.volinfoman.client.widgets">
 	<ui:style>
 		/* Add CSS here. See the GWT docs on UI Binder for more details */
 		.important {
@@ -29,18 +29,12 @@ limitations under the License.
 			widget names. The ui:field attribute binds an element to a field in the owner 
 			class. See the GWT docs on UI Binder for more details. -->
 		<br />
-		username:
-		<g:TextBox ui:field="username" />
-		<br />
-		password:
-		<g:PasswordTextBox ui:field="password" />
-		<br />
-		<g:Button ui:field="sendButton" />
-		<br />
+		<v:LongLoginWidget ui:field="loginWidget" />
 		<br />
 		<g:HTML ui:field="sendStatus" />
 		<br />
-		<br />
 		<a href="/volinfoman/registerUser">registration page</a>
+		<br />
+		<br />
 	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -23,7 +23,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.lisedex.volinfoman.client.data.UserService;
 import com.lisedex.volinfoman.server.util.Session;
-import com.lisedex.volinfoman.shared.User;
 
 /**
  * Implementation of the UserService interface for getting User information
