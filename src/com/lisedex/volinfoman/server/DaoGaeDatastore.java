@@ -15,7 +15,10 @@
  **/
 package com.lisedex.volinfoman.server;
 
+import java.util.logging.Logger;
+
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.Query;
 import com.googlecode.objectify.helper.DAOBase;
 import com.lisedex.volinfoman.server.util.BCrypt;
 import com.lisedex.volinfoman.shared.ConfirmationCode;
@@ -28,6 +31,9 @@ import com.lisedex.volinfoman.shared.User;
  */
 public class DaoGaeDatastore extends DAOBase implements Dao {
 
+    @SuppressWarnings("unused")
+	private static final Logger log = Logger.getLogger(DaoGaeDatastore.class.getName());
+    
 	// register entity classes with Objectify
 	static {
 		ObjectifyService.register(User.class);
@@ -106,7 +112,7 @@ public class DaoGaeDatastore extends DAOBase implements Dao {
 	 */
 	@Override
 	public void deleteUser(Long id) {
-		ofy().delete(User.class, id.toString()); 
+		ofy().delete(User.class, id.longValue()); 
 	}
 
 	/* (non-Javadoc)
@@ -123,5 +129,44 @@ public class DaoGaeDatastore extends DAOBase implements Dao {
 	@Override
 	public void deleteAllConfirmationCodes() {
 		ofy().delete(ofy().query(ConfirmationCode.class).fetchKeys());
+	}
+
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.server.Dao#expireCodesBefore(java.util.Calendar)
+	 */
+	@Override
+	public void expireCodesBefore(long now) {
+		Query<ConfirmationCode> oldCodes = ofy().query(ConfirmationCode.class).filter("expires <", now);
+		for (ConfirmationCode code: oldCodes) {
+
+			User user = getUser(code.getUsername());
+			if (user != null) {
+				// make sure user is still in unconfirmed state
+				if (user.getStatus() == User.STATUS_UNCONFIRMED) {
+					deleteUser(user.getId());
+				}
+			}
+			
+			deleteConfirmationCode(code);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.server.Dao#getConfirmationCode(java.lang.String)
+	 */
+	@Override
+	public ConfirmationCode getConfirmationCode(String code) {
+		ConfirmationCode fetched = ofy().query(ConfirmationCode.class).filter("code", code).get();
+		return fetched;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.server.Dao#deleteConfirmationCode(com.lisedex.volinfoman.shared.ConfirmationCode)
+	 */
+	@Override
+	public void deleteConfirmationCode(ConfirmationCode code) {
+		if (code != null) {
+			ofy().delete(code);
+		}
 	}
 }

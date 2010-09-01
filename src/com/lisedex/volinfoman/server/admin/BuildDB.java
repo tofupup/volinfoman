@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.inject.Inject;
 import com.lisedex.volinfoman.server.Dao;
 import com.lisedex.volinfoman.server.DaoGaeDatastore;
 import com.lisedex.volinfoman.shared.User;

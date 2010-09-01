@@ -67,6 +67,26 @@ limitations under the License.
 		<url-pattern>/admin/cachestats</url-pattern>
 	</servlet-mapping>
 	
+	
+	<!-- Cron jobs -->
+	<security-constraint>
+        <web-resource-collection>
+            <url-pattern>/cron/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+	
+	<servlet>
+		<servlet-name>expireConfirmationCodes</servlet-name>
+		<servlet-class>com.lisedex.volinfoman.server.cron.ExpireConfirmationCodes</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>expireConfirmationCodes</servlet-name>
+		<url-pattern>/cron/expireConfirmationCodes</url-pattern>
+	</servlet-mapping>
 	<!-- Configure gwt-log remote logging servlet -->
 	<servlet>
 		<servlet-name>remoteLoggerServiceImpl</servlet-name>

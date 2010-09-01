@@ -91,4 +91,26 @@ public interface Dao {
 	 * Delete all confirmation codes in the datastore
 	 */
 	public abstract void deleteAllConfirmationCodes();
+
+	/**
+	 * Delete all confirmation codes in datastore with expiration time,
+	 * before supplied time, and delete the user referenced, making sure 
+	 * the user has not been confirmed some other way
+	 * @param now time in milliseconds
+	 */
+	public abstract void expireCodesBefore(long now);
+
+	/**
+	 * Retrieve ConfirmationCode from datastore, as indexed by the 
+	 * confirmation code
+	 * @param code the confirmation code to look up
+	 * @return a ConfirmationCode containing the username/code matchup
+	 */
+	public abstract ConfirmationCode getConfirmationCode(String code);
+
+	/**
+	 * Delete ConfirmationCode from datastore
+	 * @param code ConfirmationCode to delete
+	 */
+	public abstract void deleteConfirmationCode(ConfirmationCode code);
 }

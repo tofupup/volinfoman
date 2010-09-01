@@ -17,8 +17,6 @@ package com.lisedex.volinfoman.server.guice;
 
 import com.google.inject.servlet.ServletModule;
 import com.lisedex.volinfoman.server.UserServiceImpl;
-import com.lisedex.volinfoman.server.admin.BuildDB;
-import com.lisedex.volinfoman.server.admin.CacheStats;
 import com.lisedex.volinfoman.server.authenticate.Register;
 
 /**

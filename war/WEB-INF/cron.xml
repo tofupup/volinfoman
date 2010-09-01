@@ -16,6 +16,11 @@ limitations under the License.
 -->
 
 <cronentries>
+	<cron>
+		<url>/cron/expireConfirmationCodes</url>
+		<description>Expire confirmation codes every day</description>
+		<schedule>every day 02:00</schedule>
+	</cron>
 <!--	<cron>-->
 <!--		<url>/recache</url>-->
 <!--		<description>Repopulate the cache every 2 minutes</description>-->

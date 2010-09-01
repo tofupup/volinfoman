@@ -40,11 +40,56 @@ import com.lisedex.volinfoman.shared.StringSafety;
 import com.lisedex.volinfoman.shared.User;
 
 /**
+ * Parse data submitted by user on the registration form.  If user can be 
+ * created, fire off an email with a confirmation code link they can use
+ * to confirm the account.  Put this code in the ConfirmationCode table in 
+ * the datastore.
+ * 
  * @author John Schutz <john@lisedex.com>
  * 
  */
 @SuppressWarnings("serial")
 public class Register extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final String EMAIL_SUBJECT = "VolunteerIM account confirmation";
+
+	/**
+	 * 
+	 */
+	private static final String EMAIL_FROM_NAME = "VolunteerIM Confirmation";
+
+	/**
+	 * 
+	 */
+	private static final String EMAIL_FROM_ADDRESS = "admin@lisedex.com";
+
+	/**
+	 * 
+	 */
+	private static final String EMAIL = "email";
+
+	/**
+	 * 
+	 */
+	private static final String LAST_NAME = "lastName";
+
+	/**
+	 * 
+	 */
+	private static final String FIRST_NAME = "firstName";
+
+	/**
+	 * 
+	 */
+	private static final String USERNAME = "username";
+
+	/**
+	 * 
+	 */
+	private static final String PASSWORD = "password";
+
 	// Specific Dao implementation injected by Guice
 	@Inject
 	private Dao dao;
@@ -53,10 +98,9 @@ public class Register extends HttpServlet {
 
     public static final int EXPIRATION_FIELD = Calendar.DATE;
     public static final int EXPIRATION_INCREMENT = 7;
-    
+        
 	/**
-	 * Adds base application information to datastore. If sent with the "delete"
-	 * query string, empties the entire datastore first.
+	 * 
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -70,11 +114,11 @@ public class Register extends HttpServlet {
 		output.println("<head><title>Add initial datastore information</title></head>");
 		output.println("<body>");
 
-		String username = req.getParameter("username");
-		String firstName = req.getParameter("firstName");
-		String lastName = req.getParameter("lastName");
-		String password = req.getParameter("password");
-		String email = req.getParameter("email");
+		String username = req.getParameter(USERNAME);
+		String firstName = req.getParameter(FIRST_NAME);
+		String lastName = req.getParameter(LAST_NAME);
+		String password = req.getParameter(PASSWORD);
+		String email = req.getParameter(EMAIL);
 
 		if (!StringSafety.isSafe(username)) {
 			output.println("<span style=\"color: #ff0000;\">Username bad, please go back and enter it again</span>");
@@ -113,8 +157,8 @@ public class Register extends HttpServlet {
 		}
 		
 		// Need to put user in database to reserve it
-		User user = new User(null, username, User.STATUS_UNCONFIRMED, firstName, lastName, email, password);
-		dao.putUser(user);
+		User user = new User(null, username, User.STATUS_UNCONFIRMED, firstName, lastName, email, null);
+		dao.changeUserPassword(user, password);
 		
 		Random r = new Random();
 		String code = Long.toString(Math.abs(r.nextLong()), 36);
@@ -129,15 +173,15 @@ public class Register extends HttpServlet {
 		Session session = Session.getDefaultInstance(props, null);
 
 		String msgBody = "Thank you for registering a VolunteerIM account!  Please follow the link below to confirm your account:\n\n";
-		msgBody += "http://lisedexvolinfomantest/volinfoman/emailConfirm?code=" + code + "\n\n";
+		msgBody += "http://lisedexvolinfomantest.appspot.com/volinfoman/emailConfirm?username=" + username + "&code=" + code + "\n\n";
 		msgBody += "Note: Please do not reply to this address, as email is thrown away.  If you did not set up a VolunteerIM account, please ignore this email, as the account will be removed automatically in a week.\n";
 		
 		try {
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("admin@lisedex.com", "VolunteerIM Confirmation"));
+            msg.setFrom(new InternetAddress(EMAIL_FROM_ADDRESS, EMAIL_FROM_NAME));
             msg.addRecipient(Message.RecipientType.TO,
                              new InternetAddress(email, firstName + " " + lastName));
-            msg.setSubject("VolunteerIM account confirmation");
+            msg.setSubject(EMAIL_SUBJECT);
             msg.setText(msgBody);
             Transport.send(msg);
     
@@ -153,26 +197,8 @@ public class Register extends HttpServlet {
             return;
 		}
 
+        log.info("Mailed confirmation email to " + email + " using code " + code + " for username " + username);
         output.println("We have sent a confirmation email to " + email + ".  It should arrive shortly.  As soon as you receive it, please <a href=\"/\">return to the front page to log in.</a>");
-		// output.println("Query String:<br />" + req.getQueryString() +
-		// "<br />");
-		// output.println("Parameters:<br />name: " + req.getParameter("name")
-		// + " Password: " + req.getParameter("password") + " email: "
-		// + req.getParameter("email"));
-		// if we got the query string "delete"
-		// if (req.getQueryString() != null
-		// && req.getQueryString().equals("delete")) {
-		// // notify user that the datastore is now gone
-		// }
-
-		// output.println("<p>Adding initial data...<p>");
-
-		// add an administrator user
-		// User user = new User(null, "admin", User.STATUS_CONFIRMED, "Admin",
-		// "Istrator", "admin@foobar.nono", null);
-		// dao.changeUserPassword(user, "heynow");
-		// output.println("Adding User: " + user.toString());
-		//
-		// output.println("</body>");
+		output.println("</body>");
 	}
 }
