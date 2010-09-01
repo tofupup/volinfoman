@@ -18,6 +18,7 @@ package com.lisedex.volinfoman.server;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.helper.DAOBase;
 import com.lisedex.volinfoman.server.util.BCrypt;
+import com.lisedex.volinfoman.shared.ConfirmationCode;
 import com.lisedex.volinfoman.shared.User;
 
 /**
@@ -30,6 +31,7 @@ public class DaoGaeDatastore extends DAOBase implements Dao {
 	// register entity classes with Objectify
 	static {
 		ObjectifyService.register(User.class);
+		ObjectifyService.register(ConfirmationCode.class);
 	}
 
 	/* (non-Javadoc)
@@ -97,5 +99,29 @@ public class DaoGaeDatastore extends DAOBase implements Dao {
 		}
 		
 		return BCrypt.checkpw(password, user.getPassword());
+	}
+
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.server.Dao#deleteUser(com.lisedex.volinfoman.shared.User)
+	 */
+	@Override
+	public void deleteUser(Long id) {
+		ofy().delete(User.class, id.toString()); 
+	}
+
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.server.Dao#putConfirmationCode(com.lisedex.volinfoman.shared.ConfirmationCode)
+	 */
+	@Override
+	public void putConfirmationCode(ConfirmationCode code) {
+		ofy().put(code);		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.lisedex.volinfoman.server.Dao#deleteAllConfirmationCodes()
+	 */
+	@Override
+	public void deleteAllConfirmationCodes() {
+		ofy().delete(ofy().query(ConfirmationCode.class).fetchKeys());
 	}
 }

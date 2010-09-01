@@ -17,6 +17,7 @@ package com.lisedex.volinfoman.server.authenticate;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Logger;
@@ -34,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Inject;
 import com.lisedex.volinfoman.server.Dao;
+import com.lisedex.volinfoman.shared.ConfirmationCode;
 import com.lisedex.volinfoman.shared.StringSafety;
 import com.lisedex.volinfoman.shared.User;
 
@@ -49,12 +51,15 @@ public class Register extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(Register.class.getName());
 
+    public static final int EXPIRATION_FIELD = Calendar.DATE;
+    public static final int EXPIRATION_INCREMENT = 7;
+    
 	/**
 	 * Adds base application information to datastore. If sent with the "delete"
 	 * query string, empties the entire datastore first.
 	 */
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
 		PrintWriter output = resp.getWriter();
@@ -107,15 +112,24 @@ public class Register extends HttpServlet {
 			return;
 		}
 		
+		// Need to put user in database to reserve it
 		User user = new User(null, username, User.STATUS_UNCONFIRMED, firstName, lastName, email, password);
 		dao.putUser(user);
 		
+		Random r = new Random();
+		String code = Long.toString(Math.abs(r.nextLong()), 36);
+		Calendar expirationTime = Calendar.getInstance();
+		expirationTime.add(EXPIRATION_FIELD, EXPIRATION_INCREMENT);
+		
+		
+		ConfirmationCode confCode = new ConfirmationCode(null, username, code, expirationTime.getTimeInMillis());
+		dao.putConfirmationCode(confCode);
+		
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
-		
+
 		String msgBody = "Thank you for registering a VolunteerIM account!  Please follow the link below to confirm your account:\n\n";
-		Random r = new Random();
-		msgBody += "http://lisedexvolinfomantest/volinfoman/emailConfirm?code=" + Long.toString(Math.abs(r.nextLong()), 36) + "\n\n";
+		msgBody += "http://lisedexvolinfomantest/volinfoman/emailConfirm?code=" + code + "\n\n";
 		msgBody += "Note: Please do not reply to this address, as email is thrown away.  If you did not set up a VolunteerIM account, please ignore this email, as the account will be removed automatically in a week.\n";
 		
 		try {
@@ -130,13 +144,15 @@ public class Register extends HttpServlet {
         } catch (AddressException e) {
         	output.println("Bad email address.  Please try again. " + e.toString() + "</body>");
         	log.info("AddressException sending confirmation email: " + e.toString());
+        	dao.deleteUser(user.getId());
         	return;
         } catch (MessagingException e) {
             output.println("Error sending confirmation email.  Please try again. " + e.toString() + "</body>");
             log.info("MessagingException sending confirmation email: " + e.toString());
+            dao.deleteUser(user.getId());
             return;
 		}
-        
+
         output.println("We have sent a confirmation email to " + email + ".  It should arrive shortly.  As soon as you receive it, please <a href=\"/\">return to the front page to log in.</a>");
 		// output.println("Query String:<br />" + req.getQueryString() +
 		// "<br />");

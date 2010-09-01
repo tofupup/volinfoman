@@ -15,6 +15,7 @@
  **/
 package com.lisedex.volinfoman.server;
 
+import com.lisedex.volinfoman.shared.ConfirmationCode;
 import com.lisedex.volinfoman.shared.User;
 
 /**
@@ -72,4 +73,22 @@ public interface Dao {
 	 * @return true if password is a match, false otherwise
 	 */
 	public abstract boolean checkUserPassword(String username, String password);
+
+	/**
+	 * Delete user from datastore by id number
+	 * 
+	 * @param id id of user to delete
+	 */
+	public abstract void deleteUser(Long id);
+
+	/**
+	 * Store confirmation code in database
+	 * @param code confirmation code object to store
+	 */
+	public abstract void putConfirmationCode(ConfirmationCode code);
+
+	/**
+	 * Delete all confirmation codes in the datastore
+	 */
+	public abstract void deleteAllConfirmationCodes();
 }

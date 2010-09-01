@@ -16,6 +16,7 @@
 package com.lisedex.volinfoman.server.admin;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,34 +46,41 @@ public class BuildDB extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException {
 		
+		PrintWriter output = resp.getWriter();
+		
 		// build HTML response page
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("utf-8");
-		resp.getWriter().println("<head><title>Add initial datastore information</title></head>");
-		resp.getWriter().println("<body>");
+		output.println("<head><title>Add initial datastore information</title></head>");
+		output.println("<body>");
 		
-//		resp.getWriter().println("Request:<br />" + req.toString() + "<br />");
-//		resp.getWriter().println("Query String:<br />" + req.getQueryString()+ "<br />");
+//		output.println("Request:<br />" + req.toString() + "<br />");
+//		output.println("Query String:<br />" + req.getQueryString()+ "<br />");
 		
 		// if we got the query string "delete"
 		if (req.getQueryString() != null && req.getQueryString().equals("delete")) {
 			// notify user that the datastore is now gone
-			resp.getWriter().println("<p><h1>DELETING DATA STORE</h1><p>");
-			resp.getWriter().print("Removing Users...");
+			output.println("<p><h1>DELETING DATA STORE</h1><p>");
+			output.print("Removing Users...");
 			
 			// delete everything in the datastore
 			dao.deleteAllUsers();
 			
-			resp.getWriter().println("DONE<p>");
+			output.println("DONE<p>");
+			
+			output.println("Removing ConfirmationCodes...");
+			dao.deleteAllConfirmationCodes();
+			
+			output.println("DONE<p>");
 		}
 		
-		resp.getWriter().println("<p>Adding initial data...<p>");
+		output.println("<p>Adding initial data...<p>");
 
 		// add an administrator user
 		User user = new User(null, "admin", User.STATUS_CONFIRMED, "Admin", "Istrator", "admin@foobar.nono", null);
 		dao.changeUserPassword(user, "heynow");
-		resp.getWriter().println("Adding User: " + user.toString());
+		output.println("Adding User: " + user.toString());
 		
-		resp.getWriter().println("</body>");
+		output.println("</body>");
 	}
 }
