@@ -19,6 +19,7 @@ import com.google.inject.servlet.ServletModule;
 import com.lisedex.volinfoman.server.UserServiceImpl;
 import com.lisedex.volinfoman.server.admin.BuildDB;
 import com.lisedex.volinfoman.server.admin.CacheStats;
+import com.lisedex.volinfoman.server.authenticate.Register;
 
 /**
  * Tells Guice to map which servlet to what URL
@@ -31,6 +32,7 @@ public class VolinfomanServletModule extends ServletModule {
 		serve("/volinfoman/user").with(UserServiceImpl.class);
 		serve("/volinfoman/admin/builddb").with(BuildDB.class);
 		serve("/volinfoman/admin/cachestats").with(CacheStats.class);
+		serve("/volinfoman/register").with(Register.class);
 	}
 }
 
