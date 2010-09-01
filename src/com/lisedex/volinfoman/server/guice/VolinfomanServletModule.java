@@ -30,8 +30,6 @@ import com.lisedex.volinfoman.server.authenticate.Register;
 public class VolinfomanServletModule extends ServletModule {
 	@Override protected void configureServlets() {
 		serve("/volinfoman/user").with(UserServiceImpl.class);
-		serve("/volinfoman/admin/builddb").with(BuildDB.class);
-		serve("/volinfoman/admin/cachestats").with(CacheStats.class);
 		serve("/volinfoman/register").with(Register.class);
 	}
 }

@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Inject;
 import com.lisedex.volinfoman.server.Dao;
+import com.lisedex.volinfoman.server.DaoGaeDatastore;
 import com.lisedex.volinfoman.shared.User;
 
 /**
@@ -34,9 +35,7 @@ import com.lisedex.volinfoman.shared.User;
  */
 @SuppressWarnings("serial")
 public class BuildDB extends HttpServlet {
-	// Specific Dao implementation injected by Guice
-	@Inject
-	private Dao dao;
+	private Dao dao = new DaoGaeDatastore();
 	
 	/**
 	 * Adds base application information to datastore.  If sent with the

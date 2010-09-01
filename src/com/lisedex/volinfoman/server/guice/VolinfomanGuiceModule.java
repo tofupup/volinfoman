@@ -20,8 +20,6 @@ import com.google.inject.Singleton;
 import com.lisedex.volinfoman.server.Dao;
 import com.lisedex.volinfoman.server.DaoGaeDatastore;
 import com.lisedex.volinfoman.server.UserServiceImpl;
-import com.lisedex.volinfoman.server.admin.BuildDB;
-import com.lisedex.volinfoman.server.admin.CacheStats;
 import com.lisedex.volinfoman.server.authenticate.Register;
 
 /**
@@ -39,8 +37,6 @@ public class VolinfomanGuiceModule extends AbstractModule {
 	protected void configure() {
 		// Servlets are Singletons
 		bind(UserServiceImpl.class).in(Singleton.class);
-		bind(BuildDB.class).in(Singleton.class);
-		bind(CacheStats.class).in(Singleton.class);
 		bind(Register.class).in(Singleton.class);
 		
 		// Data providers
