@@ -20,6 +20,8 @@ import com.google.inject.Singleton;
 import com.lisedex.volinfoman.server.Dao;
 import com.lisedex.volinfoman.server.DaoGaeDatastore;
 import com.lisedex.volinfoman.server.UserServiceImpl;
+import com.lisedex.volinfoman.server.authenticate.ConfirmationCodeChecker;
+import com.lisedex.volinfoman.server.authenticate.Login;
 import com.lisedex.volinfoman.server.authenticate.Register;
 
 /**
@@ -38,6 +40,8 @@ public class VolinfomanGuiceModule extends AbstractModule {
 		// Servlets are Singletons
 		bind(UserServiceImpl.class).in(Singleton.class);
 		bind(Register.class).in(Singleton.class);
+		bind(ConfirmationCodeChecker.class).in(Singleton.class);
+		bind(Login.class).in(Singleton.class);
 		
 		// Data providers
 		bind(Dao.class).to(DaoGaeDatastore.class).in(Singleton.class);

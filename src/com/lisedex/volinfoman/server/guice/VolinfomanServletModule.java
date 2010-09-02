@@ -17,6 +17,8 @@ package com.lisedex.volinfoman.server.guice;
 
 import com.google.inject.servlet.ServletModule;
 import com.lisedex.volinfoman.server.UserServiceImpl;
+import com.lisedex.volinfoman.server.authenticate.ConfirmationCodeChecker;
+import com.lisedex.volinfoman.server.authenticate.Login;
 import com.lisedex.volinfoman.server.authenticate.Register;
 
 /**
@@ -26,9 +28,12 @@ import com.lisedex.volinfoman.server.authenticate.Register;
  *
  */
 public class VolinfomanServletModule extends ServletModule {
-	@Override protected void configureServlets() {
+	@Override 
+	protected void configureServlets() {
 		serve("/volinfoman/user").with(UserServiceImpl.class);
 		serve("/volinfoman/register").with(Register.class);
+		serve("/volinfoman/emailConfirm").with(ConfirmationCodeChecker.class);
+		serve("/volinfoman/login").with(Login.class);
 	}
 }
 
