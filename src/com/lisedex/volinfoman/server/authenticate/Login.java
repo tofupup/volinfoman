@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +26,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.inject.Inject;
 import com.lisedex.volinfoman.server.Dao;
-import com.lisedex.volinfoman.server.util.Session;
+import com.lisedex.volinfoman.server.SessionHandler;
 import com.lisedex.volinfoman.shared.StringSafety;
 import com.lisedex.volinfoman.shared.User;
 
@@ -45,7 +44,8 @@ public class Login extends HttpServlet {
 	@Inject 
 	Dao dao;
 	
-    private static final Logger log = Logger.getLogger(Login.class.getName());
+    @SuppressWarnings("unused")
+	private static final Logger log = Logger.getLogger(Login.class.getName());
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -81,8 +81,8 @@ public class Login extends HttpServlet {
 		if (dao.checkUserPassword(username, password)) {
 			if (dao.getUser(username).getStatus() == User.STATUS_CONFIRMED) {
 				HttpSession session = req.getSession();
+				SessionHandler.setAuthenticated(session, true);
 				resp.sendRedirect(resp.encodeRedirectURL("/Volinfoman.html"));
-				session.setAttribute(Session.AUTHENTICATEDUSER, username);
 				return;
 			} else {
 				output.println("<head><title>VolunteerIM login</title></head>");

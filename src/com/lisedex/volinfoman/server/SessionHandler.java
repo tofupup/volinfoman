@@ -13,15 +13,31 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  **/
-package com.lisedex.volinfoman.client.data;
+package com.lisedex.volinfoman.server;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import javax.servlet.http.HttpSession;
 
 /**
- * Marker interface for async User related RPC services
- * 
  * @author John Schutz <john@lisedex.com>
+ * 
  */
-public interface UserServiceAsync {
-	void isAuthenticated(AsyncCallback<Boolean> callback);
+public class SessionHandler {
+	public static final String AUTHENTICATED = "authenticated";
+
+	public static void setAuthenticated(HttpSession session,
+			boolean authenticated) {
+		session.setAttribute(AUTHENTICATED, authenticated);
+	}
+
+	public static boolean isAuthenticated(HttpSession session) {
+		if (session == null)
+			return false;
+
+		Boolean auth = (Boolean) session.getAttribute(AUTHENTICATED);
+		if (auth == null) {
+			return false;
+		} else {
+			return auth.booleanValue();
+		}
+	}
 }

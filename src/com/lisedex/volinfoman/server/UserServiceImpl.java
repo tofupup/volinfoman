@@ -22,55 +22,35 @@ import javax.servlet.http.HttpSession;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.lisedex.volinfoman.client.data.UserService;
-import com.lisedex.volinfoman.server.util.Session;
 
 /**
- * Implementation of the UserService interface for getting User information
- * from the datastore
+ * Implementation of the UserService interface for getting User information from
+ * the datastore
  * 
  * @author John Schutz <john@lisedex.com>
- *
+ * 
  */
 @SuppressWarnings("serial")
 public class UserServiceImpl extends RemoteServiceServlet implements
 		UserService {
 
-    private static final Logger LOG = Logger.getLogger(UserServiceImpl.class.getName());
+	private static final Logger LOG = Logger.getLogger(UserServiceImpl.class
+			.getName());
 
-    @Inject
-    private Dao dao;
-	
+	@Inject
+	private Dao dao;
+
 	/*
 	 * (non-Javadoc)
-	 * @see com.lisedex.volinfoman.client.data.UserService#checkUserPassword(java.lang.String, java.lang.String)
+	 * 
+	 * @see com.lisedex.volinfoman.client.data.UserService#isAuthenticated()
 	 */
 	@Override
-	public boolean checkUserPassword(String username, String password) {
-		LOG.info("checkUserPassword(" + username + ", " + password + ")");
-		return dao.checkUserPassword(username, password);
+	public boolean isAuthenticated() {
+		return SessionHandler.isAuthenticated(getSession());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.lisedex.volinfoman.client.data.UserService#authenticateUser(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public boolean authenticateUser(String username, String password) {
-		HttpSession session = this.getThreadLocalRequest().getSession();
-
-		LOG.info("authenticateUser(" + username + ", " + password + ")");
-		if (username == null || password == null) {
-			LOG.info("authenticateUser: login failed, username or password null");
-			return false;
-		}
-		
-		if (!checkUserPassword(username, password)) {
-			LOG.info("authenticateUser: login failed, username does not exist, or "
-					+ "password does not match stored in datastore");
-			return false;
-		}
-		
-		session.setAttribute(Session.AUTHENTICATEDUSER, username);
-		LOG.info("authenticateUser: login succeeded.  session = " + session.getId());
-		return true;
+	private HttpSession getSession() {
+		return this.getThreadLocalRequest().getSession();
 	}
 }
