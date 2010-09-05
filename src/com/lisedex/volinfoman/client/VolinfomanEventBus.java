@@ -17,7 +17,6 @@ package com.lisedex.volinfoman.client;
 
 import com.lisedex.volinfoman.client.gin.VolinfomanModule;
 import com.mvp4g.client.annotation.Debug;
-import com.mvp4g.client.annotation.Event;
 import com.mvp4g.client.annotation.Events;
 import com.mvp4g.client.annotation.Debug.LogLevel;
 import com.mvp4g.client.event.EventBus;

@@ -16,6 +16,7 @@
 package com.lisedex.volinfoman.client;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -36,7 +37,7 @@ public class MainPagePresenter
 
 	/**
 	 * @author John Schutz <john@lisedex.com>
-	 *
+	 * 
 	 */
 	public interface MainPageViewInterface {
 		public void setContent(Widget w);
@@ -45,41 +46,46 @@ public class MainPagePresenter
 	private static final String LOADING_MESSAGE = "<h2>Loading...</h2>";
 	private static final String RPC_FAILURE_MESSAGE = "<h2>Failed to contact login server.  Please try again.</h2>";
 	private static final String NOT_AUTHENTICATED_MESSAGE = "<h2>You have not logged in.  Redirecting to login page...</h2>";
-//	private static final String HOME_PAGE_URL = "http://lisedexvolinfomantest.appspot.com";
+	// private static final String HOME_PAGE_URL =
+	// "http://lisedexvolinfomantest.appspot.com";
 	private static final String HOME_PAGE_URL = "/index.html";
-	
+
 	private UserServiceAsync userService = null;
-	
+
 	@InjectService
 	public void setService(UserServiceAsync service) {
 		Log.debug("setService() " + service);
 		this.userService = service;
 	}
-	
+
 	public MainPagePresenter() {
 		Log.debug("constructor()");
 	}
-	
+
 	@Override
 	public void bind() {
 		Log.debug("bind()");
 		view.setContent(new HTMLPanel(LOADING_MESSAGE));
-		
-		userService.isAuthenticated(new AsyncCallback<Boolean>() {	
-			@Override
-			public void onSuccess(Boolean result) {
-				if (result.booleanValue() == true) {
-					view.setContent(new HTMLPanel("<h1>AUTHENTICATED</h1>"));
-				} else {
-					view.setContent(new HTMLPanel(NOT_AUTHENTICATED_MESSAGE));
-					Window.Location.replace(HOME_PAGE_URL);
-				}
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				view.setContent(new HTMLPanel(RPC_FAILURE_MESSAGE));	
-			}
-		});
+
+		userService.isAuthenticated(
+				Cookies.getCookie(Volinfoman.SESSION_COOKIE),
+				new AsyncCallback<Boolean>() {
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result.booleanValue() == true) {
+							view.setContent(new HTMLPanel(
+									"<h1>AUTHENTICATED</h1>"));
+						} else {
+							view.setContent(new HTMLPanel(
+									NOT_AUTHENTICATED_MESSAGE));
+							Window.Location.replace(HOME_PAGE_URL);
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						view.setContent(new HTMLPanel(RPC_FAILURE_MESSAGE));
+					}
+				});
 	}
 }

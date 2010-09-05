@@ -46,11 +46,25 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 	 * @see com.lisedex.volinfoman.client.data.UserService#isAuthenticated()
 	 */
 	@Override
-	public boolean isAuthenticated() {
-		return SessionHandler.isAuthenticated(getSession());
+	public boolean isAuthenticated(final String sessionId) {
+		if (validateSessionId(sessionId)) {
+			return SessionHandler.isAuthenticated(getSession());
+		} else {
+			LOG.severe("Possible CSRF.  JSESSIONID cookie does not match included session id");
+			return false;
+		}
 	}
 
 	private HttpSession getSession() {
 		return this.getThreadLocalRequest().getSession();
+	}
+
+	private boolean validateSessionId(String sessionId) {
+		String headerSessionId = (String) getSession().getId();
+		if (sessionId != null && headerSessionId != null
+				&& headerSessionId.equals(sessionId)) {
+			return true;
+		}
+		return false;
 	}
 }

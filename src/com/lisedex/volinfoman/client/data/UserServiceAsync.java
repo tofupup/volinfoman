@@ -23,5 +23,5 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * @author John Schutz <john@lisedex.com>
  */
 public interface UserServiceAsync {
-	void isAuthenticated(AsyncCallback<Boolean> callback);
+	void isAuthenticated(final String sessionId, AsyncCallback<Boolean> callback);
 }
